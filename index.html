@@ -451,16 +451,6 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
   transition:border-color .2s ease,transform .2s ease;
 }
 .servico:hover{border-color:var(--linha);transform:translateY(-3px)}
-/* o card largo ocupa a linha inteira, pro serviço novo não ficar sozinho num canto */
-.servico.largo{
-  grid-column:1 / -1;
-  border-color:var(--linha);
-  display:grid;grid-template-columns:auto 1fr;
-  gap:0 28px;align-items:start;
-}
-.servico.largo .ic{grid-row:1 / span 2;margin-top:4px}
-.servico.largo h3{margin-top:0}
-.servico.largo p{margin-top:12px;max-width:760px}
 .servico .ic{
   width:26px;height:26px;color:var(--bege);
   display:block;
@@ -1019,9 +1009,9 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
     </article>
 
     <article class="servico">
-      <svg class="ic ic-tracado"><use href="#ic-email"></use></svg>
-      <h3>Email profissional</h3>
-      <p>contato@seunegocio.com.br no lugar do Gmail pessoal. Muda como o cliente lê a sua proposta antes mesmo de abrir.</p>
+      <svg class="ic ic-tracado"><use href="#ic-bot"></use></svg>
+      <h3>Agente de WhatsApp</h3>
+      <p>Bot que atende sozinho, a qualquer hora. Responde, manda cardápio ou tabela, e passa pra você só quem está pronto pra fechar. Quem chama sábado à noite não espera até segunda.</p>
     </article>
 
     <article class="servico">
@@ -1034,12 +1024,6 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
       <svg class="ic ic-tracado"><use href="#ic-social"></use></svg>
       <h3>Social media</h3>
       <p>Perfil organizado e alimentado com constância, pra quem chega pelo anúncio encontrar um negócio de pé e não um perfil parado há seis meses.</p>
-    </article>
-
-    <article class="servico largo">
-      <svg class="ic ic-tracado"><use href="#ic-bot"></use></svg>
-      <h3>Agente de WhatsApp</h3>
-      <p>Bot que atende sozinho, a qualquer hora. Responde o que a pessoa perguntou, manda cardápio ou tabela, qualifica quem está só olhando e passa pra você só quem está pronto pra fechar. Quem manda mensagem sábado à noite não fica sem resposta até segunda, que é onde a maior parte do cliente se perde.</p>
     </article>
 
   </div>
