@@ -25,7 +25,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 /* =========================================================
@@ -40,6 +40,8 @@
   --linha-fraca:rgba(201,191,169,.16);
 
   --sans:"Inter","Helvetica Neue",Arial,sans-serif;
+  /* serifa só nos títulos, é a letra do logo */
+  --serifa:"Playfair Display","Cormorant Garamond",Georgia,serif;
 
   /* espaçamento da seção 1, os valores ajustados */
   --gap-logo-titulo:64px;
@@ -56,10 +58,10 @@
   /* diâmetro do círculo da foto.
      O min() com svh é o teto de altura: sem ele, em janela baixa
      o círculo fica maior que o hero e o pé da foto é cortado.      */
-  --foto-tamanho:clamp(300px,min(40vw,54svh),560px);
+  --foto-tamanho:clamp(280px,min(34vw,56svh),500px);
 
   /* força do brilho atrás da foto: 0 apaga, 1 é o máximo */
-  --halo-forca:.85;
+  --halo-forca:.32;
 
   --margem-lateral:56px;
   --nav-altura:76px;
@@ -155,7 +157,10 @@ img{max-width:100%;display:block}
 /* ---- foto, com o halo atrás ---- */
 .hero-foto{
   position:absolute;z-index:3;
-  right:-40px;top:50%;transform:translateY(-50%);
+  /* centralizado por top, não por transform: a animação de entrada
+     termina em transform:none e jogava a foto meio círculo pra baixo */
+  right:calc(var(--margem-lateral) + 24px);
+  top:calc(50% - var(--foto-tamanho) / 2 + var(--nav-altura) / 2);
   /* largura E altura explícitas: nada aqui depende de aspect-ratio */
   width:var(--foto-tamanho);
   height:var(--foto-tamanho);
@@ -350,9 +355,10 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 }
 
 .hero h1{
-  font-size:clamp(34px,3.4vw,48px);
-  font-weight:700;
-  letter-spacing:.02em;
+  font-family:var(--serifa);
+  font-size:clamp(36px,3.8vw,56px);
+  font-weight:600;
+  letter-spacing:.08em;
   text-transform:uppercase;
   line-height:1.1;
   color:var(--offwhite);
@@ -420,9 +426,10 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
   font-weight:500;color:var(--bege);
 }
 .secao h2{
-  margin-top:18px;
-  font-size:clamp(28px,3vw,40px);
-  font-weight:700;letter-spacing:.02em;text-transform:uppercase;
+  margin-top:16px;
+  font-family:var(--serifa);
+  font-size:clamp(30px,3.4vw,46px);
+  font-weight:600;letter-spacing:.01em;
   line-height:1.15;color:var(--offwhite);
 }
 .secao-lead{
@@ -435,44 +442,23 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 .ic-tracado{fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 
 /* =========================================================
-   SEÇÃO 2, SERVIÇOS
+   SERVIÇOS, bloco curto apontando pra agência
    ========================================================= */
-.servicos-grade{
-  margin-top:56px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-.servico{
+.agencia{
+  display:flex;align-items:flex-end;justify-content:space-between;gap:40px;
   background:var(--preto-card);
   border:1px solid var(--linha-fraca);
   border-radius:4px;
-  padding:32px 28px 34px;
-  transition:border-color .2s ease,transform .2s ease;
+  padding:44px;
 }
-.servico:hover{border-color:var(--linha);transform:translateY(-3px)}
-.servico .ic{
-  width:26px;height:26px;color:var(--bege);
-  display:block;
-}
-.servico h3{
-  margin-top:22px;
-  font-size:15px;font-weight:600;
-  letter-spacing:.08em;text-transform:uppercase;
-  color:var(--offwhite);
-}
-.servico p{
-  margin-top:14px;
-  font-size:14.5px;line-height:25px;font-weight:300;
-  color:rgba(232,226,217,.6);
-}
-
-@media (max-width:1100px){
-  .servicos-grade{grid-template-columns:repeat(2,1fr)}
+.agencia h2{margin-top:14px}
+.agencia-acoes{flex:none}
+@media (max-width:900px){
+  .agencia{flex-direction:column;align-items:stretch;gap:28px;padding:30px 22px}
 }
 
 /* =========================================================
-   SEÇÃO 3, PROJETOS
+   SEÇÃO 2, PROJETOS
    ========================================================= */
 .projeto-destaque{
   margin-top:56px;
@@ -488,9 +474,24 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 }
 .projeto-destaque h3{
   margin-top:16px;
-  font-size:clamp(24px,2.3vw,32px);font-weight:700;
-  letter-spacing:.02em;color:var(--offwhite);
+  font-family:var(--serifa);
+  font-size:clamp(26px,2.5vw,34px);font-weight:600;
+  letter-spacing:.01em;color:var(--offwhite);
 }
+
+/* prints do projeto: fazem o recrutador ver antes de ler */
+.projeto-midia{
+  grid-column:1 / -1;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.projeto-midia img,
+.projeto-capa{
+  width:100%;height:auto;aspect-ratio:16 / 10;object-fit:cover;object-position:top;
+  border-radius:4px;
+  border:1px solid var(--linha-fraca);
+  background:var(--preto);
+}
+.projeto-capa{margin:-6px 0 22px}
 .projeto-destaque .resumo{
   margin-top:18px;font-size:15.5px;line-height:27px;font-weight:300;
   color:rgba(232,226,217,.66);
@@ -511,7 +512,7 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 
 .projetos-grade{
   margin-top:16px;
-  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
 }
 .projeto{
   background:var(--preto-card);
@@ -556,6 +557,10 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 
 @media (max-width:1100px){
   .projeto-destaque{grid-template-columns:1fr;gap:28px;padding:32px 26px 34px}
+  .projetos-grade{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  .projeto-midia{grid-template-columns:1fr}
 }
 
 /* =========================================================
@@ -789,8 +794,6 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
   .navbar-links a.ativo::after{left:var(--margem-lateral);right:auto;width:18px;bottom:10px}
   .btn{flex:1 1 auto;min-width:180px}
 
-  .servicos-grade{grid-template-columns:1fr;margin-top:40px}
-  .servico{padding:26px 22px 28px}
 
   .projetos-grade{grid-template-columns:1fr}
   .projeto{padding:26px 22px 28px}
@@ -828,12 +831,10 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
    levantado até a pessoa tocar em outro lugar.
    ========================================================= */
 @media (hover:none){
-  .servico:hover,
   .projeto:hover,
   .contato-card:hover{transform:none}
 
   /* devolve o retorno visual no momento do toque, que aí é certo */
-  .servico:active,
   .projeto:active,
   .contato-card:active{border-color:var(--linha)}
   .btn:active,.link-projeto:active{opacity:.82}
@@ -925,10 +926,10 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 
   <nav class="navbar-links" id="navbar-links">
     <a href="#inicio">Início</a>
-    <a href="#servicos">Serviços</a>
     <a href="#projetos">Projetos</a>
     <a href="#stack">Stack</a>
     <a href="#sobre">Sobre</a>
+    <a href="#servicos">Serviços</a>
     <a href="#contato">Contato</a>
   </nav>
 
@@ -980,60 +981,7 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 
 
 <!-- ==========================================================
-     SEÇÃO 2, SERVIÇOS
-     ========================================================== -->
-<section class="secao" id="servicos">
-
-  <p class="secao-etiqueta">Serviços</p>
-  <h2>Onde eu entro</h2>
-  <p class="secao-lead">Não chego com pacote fechado. Olho a empresa, acho onde está doendo e resolvo aquilo: o agendamento que está na mão de um terceiro, o negócio que não aparece no mapa, o perfil parado há meses.</p>
-
-  <div class="servicos-grade">
-
-    <article class="servico">
-      <svg class="ic ic-tracado"><use href="#ic-site"></use></svg>
-      <h3>Site e sistema próprio</h3>
-      <p>Agendamento, catálogo, galeria, pedido caindo no WhatsApp. Sistema seu, no seu domínio, não uma página dentro do aplicativo de outra empresa.</p>
-    </article>
-
-    <article class="servico">
-      <svg class="ic ic-tracado"><use href="#ic-trafego"></use></svg>
-      <h3>Tráfego pago</h3>
-      <p>Campanha no Google e no Meta pra alcançar quem já está procurando o que você vende. Com relatório do que entrou e quanto custou cada contato.</p>
-    </article>
-
-    <article class="servico">
-      <svg class="ic ic-tracado"><use href="#ic-mapa"></use></svg>
-      <h3>Google Meu Negócio</h3>
-      <p>Perfil completo, com foto, horário, serviço e endereço certo. É o que faz o negócio aparecer no mapa quando alguém busca por perto.</p>
-    </article>
-
-    <article class="servico">
-      <svg class="ic ic-tracado"><use href="#ic-bot"></use></svg>
-      <h3>Agente de WhatsApp</h3>
-      <p>Bot que atende sozinho, a qualquer hora. Responde, manda cardápio ou tabela, e passa pra você só quem está pronto pra fechar. Quem chama sábado à noite não espera até segunda.</p>
-    </article>
-
-    <article class="servico">
-      <svg class="ic ic-tracado"><use href="#ic-carrossel"></use></svg>
-      <h3>Carrosséis</h3>
-      <p>Post pronto pra publicar, na identidade do seu negócio. No lugar do print da tabela de preço feito no bloco de notas.</p>
-    </article>
-
-    <article class="servico">
-      <svg class="ic ic-tracado"><use href="#ic-social"></use></svg>
-      <h3>Social media</h3>
-      <p>Perfil organizado e alimentado com constância, pra quem chega pelo anúncio encontrar um negócio de pé e não um perfil parado há seis meses.</p>
-    </article>
-
-  </div>
-</section>
-
-</div><!-- /.topo-pagina -->
-
-
-<!-- ==========================================================
-     SEÇÃO 3, PROJETOS
+     SEÇÃO 2, PROJETOS
      ========================================================== -->
 <section class="secao" id="projetos">
 
@@ -1043,6 +991,10 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 
   <!-- destaque -->
   <article class="projeto-destaque">
+    <div class="projeto-midia">
+      <img src="assets/projetos/acai.jpg" alt="Página inicial do Açaí Ki Delícia, com chamada pra pedir pelo WhatsApp" width="1280" height="800" loading="lazy">
+      <img src="assets/projetos/acai-montador.jpg" alt="Montador de açaí: escolha da base com o resumo do pedido e o total ao lado" width="1280" height="800" loading="lazy">
+    </div>
     <div>
       <p class="projeto-selo">Projeto entregue, no ar</p>
       <h3>Açaí Ki Delícia Perus</h3>
@@ -1071,26 +1023,33 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
   <div class="projetos-grade">
 
     <article class="projeto">
+      <img class="projeto-capa" src="assets/projetos/barbearia.jpg" alt="Demo da Barbearia Rocha, página inicial com botão de agendar horário" width="1280" height="800" loading="lazy">
       <h3>Barbearia Rocha</h3>
       <p>Demo que eu construí pra prospecção, antes de pedir qualquer coisa ao dono. Agendamento simulado e preço fictício, com galeria, serviços e sobre.</p>
       <div class="projeto-tec"><span class="tec">HTML</span><span class="tec">CSS</span><span class="tec">JavaScript</span></div>
       <div class="projeto-links">
+        <a class="link-projeto principal" href="https://kauanrodrigueskrvl444-netizen.github.io/barbearia-rocha-demo/" target="_blank" rel="noopener">
+          <svg class="ic ic-tracado"><use href="#ic-link"></use></svg>Ver no ar</a>
         <a class="link-projeto" href="https://github.com/kauanrodrigueskrvl444-netizen/barbearia-rocha-demo" target="_blank" rel="noopener">
           <svg class="ic"><use href="#ic-github"></use></svg>Código</a>
       </div>
     </article>
 
     <article class="projeto">
+      <img class="projeto-capa" src="assets/projetos/rick.jpg" alt="Grade de personagens carregada da API de Rick and Morty" width="1280" height="800" loading="lazy">
       <h3>API Rick and Morty</h3>
       <p>Consumo de API externa com busca e listagem de personagens, implementado fiel ao layout do Figma.</p>
       <div class="projeto-tec"><span class="tec">HTML</span><span class="tec">CSS</span><span class="tec">JavaScript</span><span class="tec">API REST</span></div>
       <div class="projeto-links">
+        <a class="link-projeto principal" href="https://kauanrodrigueskrvl444-netizen.github.io/API-rick-and-morty/" target="_blank" rel="noopener">
+          <svg class="ic ic-tracado"><use href="#ic-link"></use></svg>Ver no ar</a>
         <a class="link-projeto" href="https://github.com/kauanrodrigueskrvl444-netizen/API-rick-and-morty" target="_blank" rel="noopener">
           <svg class="ic"><use href="#ic-github"></use></svg>Código</a>
       </div>
     </article>
 
     <article class="projeto">
+      <img class="projeto-capa" src="assets/projetos/tarefas.jpg" alt="Gerenciador de tarefas com três tarefas adicionadas" width="1280" height="800" loading="lazy">
       <h3>Gerenciador de tarefas</h3>
       <p>Lista de tarefas com criação, conclusão e remoção, mantendo o estado entre sessões.</p>
       <div class="projeto-tec"><span class="tec">HTML</span><span class="tec">CSS</span><span class="tec">JavaScript</span></div>
@@ -1104,6 +1063,11 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 
   </div>
 </section>
+
+</div><!-- /.topo-pagina -->
+
+
+
 
 
 <!-- ==========================================================
@@ -1227,6 +1191,24 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
 
 
 <!-- ==========================================================
+     SERVIÇOS, versão curta: o detalhe mora no site da agência
+     ========================================================== -->
+<section class="secao" id="servicos">
+  <div class="agencia">
+    <div>
+      <p class="secao-etiqueta">Também atendo empresas</p>
+      <h2>Rodrigues Soluções Digitais</h2>
+      <p class="secao-lead">Pela minha agência eu faço site e sistema próprio, tráfego pago, Google Meu Negócio e agente de WhatsApp pra empresa que chega com um problema concreto de presença digital.</p>
+    </div>
+    <div class="agencia-acoes">
+      <a class="btn btn-linha" href="https://rodrigues-solucoes-digitais.netlify.app" target="_blank" rel="noopener">
+        <svg class="ic ic-tracado"><use href="#ic-link"></use></svg>Conhecer a agência</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ==========================================================
      SEÇÃO 6, CONTATO
      ========================================================== -->
 <section class="secao" id="contato">
@@ -1247,7 +1229,7 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
     <a class="contato-card js-github" href="#" target="_blank" rel="noopener">
       <svg class="ic"><use href="#ic-github"></use></svg>
       <span class="rot">GitHub</span>
-      <span class="val js-github-txt">16 repositórios públicos</span>
+      <span class="val js-github-txt">Código de todos os projetos</span>
     </a>
 
     <a class="contato-card js-linkedin" href="#" target="_blank" rel="noopener">
@@ -1331,7 +1313,7 @@ html.menu-aberto,html.menu-aberto body{overflow:hidden}
   /* o hero não entra aqui, ele já tem a animação de abertura */
   const seletor = [
     ".secao-etiqueta", ".secao h2", ".secao-lead",
-    ".servico",
+    ".agencia",
     ".projeto-destaque", ".projeto",
     ".bloco-stack",
     ".sobre-texto p", ".formacao", ".metas-rotulo", ".metas li",
@@ -1471,7 +1453,7 @@ function aplicar(classe, href, textoVisivel){
 
 aplicar("js-whats",     "https://wa.me/" + WHATSAPP, "(11) 93239-1284");
 aplicar("js-email",     "mailto:" + EMAIL,           EMAIL);
-aplicar("js-github",    GITHUB,                      "16 repositórios públicos");
+aplicar("js-github",    GITHUB,                      "Código de todos os projetos");
 aplicar("js-linkedin",  LINKEDIN,                    "Kauã Rodrigues");
 aplicar("js-instagram", INSTAGRAM,                   "@rdkz07");
 

@@ -11,16 +11,19 @@ assets/kr.png           monograma KR, favicon e navbar
 assets/kaua.jpg         retrato do hero
 assets/capa.jpg         imagem de prévia ao compartilhar o link (Open Graph)
 assets/grade-chao.svg   grade em perspectiva do fundo
+assets/projetos/        prints dos projetos (1280x800, JPG)
 ```
 
 ## Seções
 
 1. Hero, com nome, resumo, botões e stack
-2. Serviços, sete cards
-3. Projetos, Açaí Ki Delícia em destaque e outros três
-4. Stack, quatro blocos com o estágio real de cada um
-5. Sobre e formação, com as metas
+2. Projetos, Açaí Ki Delícia em destaque com dois prints e outros três com capa
+3. Stack, quatro blocos com o estágio real de cada um
+4. Sobre e formação, com as metas
+5. Serviços, bloco curto que leva pro site da Rodrigues Soluções Digitais
 6. Contato, cinco canais
+
+Títulos em Playfair Display (serifa do logo), corpo em Inter.
 
 ## Como mexer
 
